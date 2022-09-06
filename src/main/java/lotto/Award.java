@@ -11,9 +11,9 @@ public enum Award {
         this.price = price;
     }
 
-    public static Integer getPrice(int hit){
-        for(Award award : Award.values()){
-            if(award.hit == hit) return award.price;
+    public static Integer getPrice(int hit) {
+        for (Award award : Award.values()) {
+            if (award.hit == hit) return award.price;
         }
         return 0;
     }
