@@ -1,11 +1,18 @@
 package lotto;
-
-
+import java.lang.reflect.Array;
+import java.util.Iterator;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Random;
+
+
 
 public class LottoJava {
-    private int coin;
-    private int count;
+    final int LOTTONUM = 6;
+    final int LOTTOMAX = 45;
+    final Random rand = new Random();
+    private int coin, count;
+    private ArrayList<ArrayList<Integer>> papers = new ArrayList<>();
 
     public void insertCoin() {
         Scanner sc = new Scanner(System.in);
@@ -15,5 +22,31 @@ public class LottoJava {
     public void lottoCount() {
         count = coin / 1000;
         System.out.println("로또의 개수는 :" + count);
+    }
+
+    private ArrayList getPaper() {
+        ArrayList<Integer> paper = new ArrayList<>();
+        for(int i=0; i<LOTTONUM; i++){
+            paper.add(rand.nextInt(LOTTOMAX)+1);
+        }
+        return paper;
+    }
+
+    public void getAllPapers() {
+        papers.clear();
+        for(int i=0; i<count; i++) {
+            papers.add(getPaper());
+        }
+
+        Iterator iter = papers.iterator();
+        while(iter.hasNext()) {
+            System.out.println(iter.next());
+        }
+    }
+
+    public void run(){
+        insertCoin();
+        lottoCount();
+        getAllPapers();
     }
 }
