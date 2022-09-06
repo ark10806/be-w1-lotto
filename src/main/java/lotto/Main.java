@@ -9,9 +9,6 @@ public class Main {
 
     public static final int UNIT_COST = 1000;
 
-    public static String getHello() {
-        return "Hello";
-    }
     public static void main(String[] args) {
         // 1. money -> 14000원
 
@@ -35,7 +32,7 @@ public class Main {
 
         Scanner scan = new Scanner(System.in);
 
-        System.out.print("구입금액을 입력해 주세요");
+        System.out.print("구입금액을 입력해 주세요\n");
         int money = scan.nextInt();
 
         int ticketCount = money / UNIT_COST;
@@ -55,8 +52,6 @@ public class Main {
 
         Ticket winningTicket = new Ticket(winningNumbers);
 
-
-
-        System.out.println(Main.getHello());
+        LottoResult result = Lotto.run(tickets, winningTicket, money);
     }
 }
