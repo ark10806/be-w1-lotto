@@ -9,5 +9,6 @@ public class Main {
     public static void main(String[] args) {
         LottoJava lotto = new LottoJava();
         lotto.insertCoin();
+        lotto.lottoCount();
     }
 }
