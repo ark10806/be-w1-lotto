@@ -2,14 +2,13 @@ package lotto;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class Lotto {
     private ArrayList<Integer> numbers;
 
     public Lotto() {
         ArrayList<Integer> totalNumbers = new ArrayList<>();
-        for(int i=1; i<=45; i++) {
+        for (int i = 1; i <= 45; i++) {
             totalNumbers.add(i);
         }
 
@@ -27,7 +26,7 @@ public class Lotto {
         lottoIndex = winningIndex = 0;
         int matched = 0;
 
-        while(lottoIndex < 6 && winningIndex < 6) {
+        while (lottoIndex < 6 && winningIndex < 6) {
             if (numbers.get(lottoIndex) == winningNumbers.get(winningIndex)) {
                 matched++;
                 lottoIndex++;
