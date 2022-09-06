@@ -11,3 +11,4 @@ class MainTest {
         assertThat(Main.getHello()).isEqualTo("Hello");
     }
 }
+

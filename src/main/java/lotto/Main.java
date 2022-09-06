@@ -1,4 +1,5 @@
 package lotto;
+import lotto.LottoJava;
 
 public class Main {
 
@@ -6,6 +7,7 @@ public class Main {
         return "Hello";
     }
     public static void main(String[] args) {
-        System.out.println(Main.getHello());
+        LottoJava lotto = new LottoJava();
+        lotto.insertCoin();
     }
 }
