@@ -77,7 +77,7 @@ public class Main {
     private static long getTotalAwards(Map<Integer, Integer> awards) {
         long total = 0;
         for (Map.Entry<Integer, Integer> map : awards.entrySet()) {
-            total += Award.getPrice(map.getKey()) * map.getValue();
+            total += (long) Award.getPrice(map.getKey()) * map.getValue();
         }
         return total;
     }
