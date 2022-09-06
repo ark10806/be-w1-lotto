@@ -1,5 +1,7 @@
 package lotto;
 
+import java.io.BufferedReader;
+import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -38,7 +40,20 @@ public class Main {
 
         int ticketCount = money / UNIT_COST;
 
-        Set<Ticket> tickets = TicketAutomaticMaker.make(ticketCount);
+        TicketAutomaticMaker ticketAutomaticMaker = new TicketAutomaticMaker();
+
+        Set<Ticket> tickets = ticketAutomaticMaker.make(ticketCount);
+
+        Set<Integer> winningNumbers = new HashSet<>();
+
+        System.out.println("지난 주 당첨 번호를 입력해 주세요.");
+        String[] inputs = scan.nextLine().split(",");
+
+        for (String input : inputs) {
+            winningNumbers.add(Integer.parseInt(input));
+        }
+
+        Ticket winningTicket = new Ticket(winningNumbers);
 
 
 
