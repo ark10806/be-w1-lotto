@@ -1,6 +1,8 @@
 package lotto;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Ticket {
 
@@ -14,4 +16,8 @@ public class Ticket {
         return this.numbers;
     }
 
+    @Override
+    public String toString() {
+        return numbers.stream().sorted().collect(Collectors.toList()).toString();
+    }
 }

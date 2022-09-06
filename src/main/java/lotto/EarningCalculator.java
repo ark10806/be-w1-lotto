@@ -13,6 +13,10 @@ public class EarningCalculator {
         prizeTable.put(6, 2000000000);
     }
 
+    public Map<Integer,Integer> getPrizeTable(){
+        return this.prizeTable;
+    }
+
     public double getEarningRate(LottoResult lottoResult) {
         double totalCount = 0.0;
 
