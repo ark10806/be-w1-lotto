@@ -5,53 +5,22 @@ import java.util.*;
 public class Main {
 
     public static final int UNIT_COST = 1000;
+    private static final Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
 
-        Scanner scan = new Scanner(System.in);
+        int money = inputNumber("구입금액을 입력해 주세요\n");
 
-        System.out.print("구입금액을 입력해 주세요\n");
-        int money = scan.nextInt();
-        scan.nextLine();
-        if(money < 0) {
-            throw new IllegalArgumentException("0이상의 숫자여야 한다.");
-        }
+        InputChecker.naturalNumber(money);
 
         int ticketCount = money / UNIT_COST;
 
-        System.out.println("수동으로 구매할 로또 수를 입력해 주세요.");
-        int manualTicketCount = scan.nextInt();
-        scan.nextLine();
+        int manualTicketCount = inputNumber("수동으로 구매할 로또 수를 입력해 주세요.");
 
-        if(manualTicketCount < 0) {
-            throw new IllegalArgumentException("0이상의 숫자여야 한다.");
-        }
+        InputChecker.naturalNumber(manualTicketCount);
+        InputChecker.validateTicketCount(manualTicketCount, ticketCount);
 
-        if(manualTicketCount > ticketCount) {
-            throw new IllegalArgumentException("금액 내의 범위를 입력해 주세요.");
-        }
-
-        System.out.println("수동으로 구매할 번호를 입력해 주세요.");
-        Set<LottoTicket> manualLottoTickets = new HashSet<>();
-
-        for(int i = 0; i < manualTicketCount; i++) {
-            Set<Integer> manualNumbers = new HashSet<>();
-
-            String[] inputs = scan.nextLine().split(",");
-            for(String input : inputs) {
-                manualNumbers.add(Integer.parseInt(input.trim()));
-            }
-
-            if(manualNumbers.size() != 6) {
-                throw new IllegalArgumentException("로또의 숫자는 6개입니다.");
-            }
-
-            manualLottoTickets.add(new LottoTicket(manualNumbers));
-        }
-
-        if(manualLottoTickets.size() != manualTicketCount) {
-            throw new IllegalArgumentException("중복된 로또 티켓은 발급할 수 없습니다.");
-        }
+        Set<LottoTicket> manualLottoTickets = inputManualLottoTicket("수동으로 구매할 번호를 입력해 주세요.", manualTicketCount);
 
         TicketAutomaticMaker ticketAutomaticMaker = new TicketAutomaticMaker();
 
@@ -62,9 +31,7 @@ public class Main {
             System.out.println(lottoTicket.toString());
         }
 
-        if(tickets.size() != ticketCount) {
-            throw new IllegalArgumentException("로또 티켓은 중복될 수 없습니다.");
-        }
+        InputChecker.checkTicketDuplication(tickets, ticketCount);
 
         Set<Integer> winningNumbers = new HashSet<>();
 
@@ -85,7 +52,39 @@ public class Main {
         printStatistics(result);
     }
 
-    public static void printStatistics(LottoResult result){
+    private static Set<LottoTicket> inputManualLottoTicket(String prompt,  int manualTicketCount) {
+        System.out.print(prompt);
+        System.out.print(prompt);
+
+        Set<LottoTicket> manualLottoTickets = new HashSet<>();
+
+        for(int i = 0; i < manualTicketCount; i++) {
+            manualLottoTickets.add(new LottoTicket(inputTicketNumberSet()));
+        }
+
+        return manualLottoTickets;
+    }
+
+    private static Set<Integer> inputTicketNumberSet() {
+        Set<Integer> inputNumbers = new HashSet<>();
+        String[] inputs = scan.nextLine().split(",");
+        for(String input : inputs) {
+            inputNumbers.add(Integer.parseInt(input.trim()));
+        }
+        return inputNumbers;
+    }
+
+    private static int inputNumber(String prompt) {
+        System.out.print(prompt);
+
+        int number = scan.nextInt();
+        scan.nextLine();
+
+        return number;
+    }
+
+
+    private static void printStatistics(LottoResult result){
 
         System.out.println("당첨 통계");
         System.out.println("------------------");
