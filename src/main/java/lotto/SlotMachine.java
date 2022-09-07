@@ -1,11 +1,8 @@
 package lotto;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
-public class LottoJava {
-    final int LOTTONUM = 6;
-    final int LOTTOMAX = 45;
+public class SlotMachine extends LottoRule {
     final Random rand = new Random();
     private int coin, count;
     private String lastNumber;

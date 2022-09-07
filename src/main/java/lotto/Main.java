@@ -1,26 +1,21 @@
 package lotto;
 
-import lotto.LottoJava;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Main {
 
-    public static String getHello() {
-        return "Hello";
-    }
-
     public static void main(String[] args) {
-        LottoJava lotto = new LottoJava();
-
-        int coin = lotto.insertCoin();
-
-        lotto.lottoCount();
-        ArrayList<HashSet<Integer>> papers = lotto.getAllPapers();
-
+        int coin;
+        ArrayList<HashSet<Integer>> papers;
+        SlotMachine slotMachine = new SlotMachine();
         Award award = new Award();
-        award.setWinnerNumbers();
+
+        coin = slotMachine.insertCoin();
+        slotMachine.lottoCount();
+        papers = slotMachine.getAllPapers();
+
+        award.init();
         award.compute(papers);
         award.showResult();
         award.showYield(coin);
