@@ -1,4 +1,5 @@
 package lotto;
+
 import lotto.LottoJava;
 
 import java.util.ArrayList;
@@ -12,11 +13,18 @@ public class Main {
 
     public static void main(String[] args) {
         LottoJava lotto = new LottoJava();
-        ArrayList<HashSet<Integer>> candidates = lotto.run();
+
+        int coin = lotto.insertCoin();
+
+        lotto.lottoCount();
+        ArrayList<HashSet<Integer>> papers = lotto.getAllPapers();
 
         Award award = new Award();
         award.setWinnerNumbers();
-        award.compute(candidates);
+        award.compute(papers);
         award.showResult();
+        award.showYield(coin);
     }
+
+
 }
