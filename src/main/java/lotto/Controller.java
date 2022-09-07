@@ -25,11 +25,11 @@ public class Controller {
 
     public void initWinningCount() {
         winningCount = new LinkedHashMap<>();
-        winningCount.put(Rank.valueOf(3,false), 0);
-        winningCount.put(Rank.valueOf(4,false), 0);
-        winningCount.put(Rank.valueOf(5,false), 0);
-        winningCount.put(Rank.valueOf(5,true), 0);
-        winningCount.put(Rank.valueOf(6,false), 0);
+        winningCount.put(Rank.valueOf(3, false), 0);
+        winningCount.put(Rank.valueOf(4, false), 0);
+        winningCount.put(Rank.valueOf(5, false), 0);
+        winningCount.put(Rank.valueOf(5, true), 0);
+        winningCount.put(Rank.valueOf(6, false), 0);
     }
 
     public void calculateWinningCount() {
@@ -37,20 +37,28 @@ public class Controller {
         for (int i = 0; i < lottos.size(); i++) {
             int index = lottos.get(i).match(winningNumbers);
             boolean matched = false;
-            if ( index == 4 && lottos.get(i).bonusMatch(bonusNumber) ) {
+            if (index == 4 && lottos.get(i).bonusMatch(bonusNumber)) {
                 index++;
                 matched = true;
             }
-            winningCount.put(Rank.valueOf(index, matched), winningCount.get(Rank.valueOf(index, matched))+1);
+            if (index >= 3) {
+                winningCount.replace(Rank.valueOf(index, matched), winningCount.get(Rank.valueOf(index, matched)) + 1);
+            }
         }
     }
 
     public void calculateYield() {
         int totalWinnings = 0;
-        for (int i = 3; i <= 6; i ++) {
-            totalWinnings += winningCount.get(i) * Rank.valueOf(i, false).getWinningMoney();
+
+        Set<Rank> set = winningCount.keySet();
+        Iterator<Rank> iter = set.iterator();
+        while (iter.hasNext()) {
+            Rank rank = ((Rank) iter.next());
+            int count = winningCount.get(rank);
+            totalWinnings += rank.getWinningMoney() * count;
         }
-        yield = ((totalWinnings-(lottoNumber*1000))/(lottoNumber*1000.0))*100;
+
+        yield = ((totalWinnings - (lottoNumber * 1000)) / (lottoNumber * 1000.0)) * 100;
     }
 
     public void buy() {
