@@ -7,22 +7,39 @@ import java.util.Set;
 
 public class Lotto {
     public static LottoResult run(Set<Ticket> tickets, Ticket winningTicket, int money) {
-        Map<Integer, Integer> resultMap = new HashMap<>();
+        Map<Rank, Integer> resultMap = new HashMap<>();
 
         initMap(resultMap);
 
         for (var ticket : tickets) {
             var target = new HashSet<>(ticket.getNumbers());
             target.retainAll(winningTicket.getNumbers());
-            resultMap.put(target.size(), resultMap.get(target.size()) + 1);
+
+            resultMap.put(Rank.getRankOfResult(target.size(), false), resultMap.get(Rank.getRankOfResult(target.size(), false)) + 1);
         }
 
         return new LottoResult(resultMap, money);
     }
 
-    private static void initMap(Map<Integer, Integer> resultMap) {
-        for (int i = 0; i <= 6; i++) {
-            resultMap.put(i, 0);
+    private static void initMap(Map<Rank, Integer> resultMap) {
+        for (Rank rank : Rank.values()) {
+            resultMap.put(rank, 0);
         }
+    }
+
+    public static LottoResult runWithBonus(Set<Ticket> tickets, Ticket winningTicket, int bonusNumber, int money) {
+        Map<Rank, Integer> resultMap = new HashMap<>();
+
+        initMap(resultMap);
+
+        for (var ticket : tickets) {
+            var target = new HashSet<>(ticket.getNumbers());
+            target.retainAll(winningTicket.getNumbers());
+
+            boolean bonus = ticket.getNumbers().contains(bonusNumber);
+            resultMap.put(Rank.getRankOfResult(target.size(), bonus), resultMap.get(Rank.getRankOfResult(target.size(), bonus)) + 1);
+        }
+
+        return new LottoResult(resultMap, money);
     }
 }
