@@ -12,7 +12,10 @@ public class Main {
         Award award = new Award();
 
         coin = slotMachine.insertCoin();
+        slotMachine.checkNotAuto();
         slotMachine.lottoCount();
+        slotMachine.notAutoWrite();
+        notAutoPapers = slotMachine.getNotAutoPapers();
         papers = slotMachine.getAllPapers();
 
         award.init();
