@@ -1,7 +1,7 @@
 package lotto;
 
 public enum Award {
-    FIRST(6, 2000000000), SECOND(5, 1500000), THIRD(4, 50000), FOURTH(3, 5000);
+    FIRST(6, 2000000000), SECOND(5, 30000000), THIRD(5, 1500000), FOURTH(4, 50000), FIFTH(3, 5000);
 
     public final Integer hit;
     public final Integer price;
@@ -11,10 +11,13 @@ public enum Award {
         this.price = price;
     }
 
-    public static Integer getPrice(int hit) {
+    public static Award getAwards(int hit) {
         for (Award award : Award.values()) {
-            if (award.hit == hit) return award.price;
+            if (award.hit == hit && award != SECOND) {
+                return award;
+            }
         }
-        return 0;
+
+        return null;
     }
 }
