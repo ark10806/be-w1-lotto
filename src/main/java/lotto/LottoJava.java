@@ -20,12 +20,10 @@ public class LottoJava {
         System.out.println("구입금액을 입력해 주세요.");
         coin = sc.nextInt();
     }
-
     public void lottoCount() {
         count = coin / 1000;
         System.out.println("로또의 개수는 :" + count);
     }
-
     private ArrayList getPaper() {
         ArrayList<Integer> paper = new ArrayList<>();
         for (int i = 0; i < LOTTONUM; i++) {
@@ -33,7 +31,6 @@ public class LottoJava {
         }
         return paper;
     }
-
     public void getAllPapers() {
         papers.clear();
         for (int i = 0; i < count; i++) {
@@ -45,7 +42,6 @@ public class LottoJava {
             System.out.println(iter.next());
         }
     }
-
     public String[] lastWinner() {
         Scanner sc = new Scanner(System.in);
         System.out.println("지난 주 당첨 번호를 입력해 주세요.");
@@ -53,7 +49,6 @@ public class LottoJava {
         String[] Number = lastNumber.split(",");
         return Number;
     }
-
     public void run() {
         insertCoin();
         lottoCount();
