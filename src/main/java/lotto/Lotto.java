@@ -46,8 +46,8 @@ public class Lotto {
     }
 
     public boolean bonusMatch(int bonusNumber) {
-        for ( int i = 0 ; i < 6 ; i++ ) {
-            if ( numbers.get(i) == bonusNumber )
+        for (int i = 0; i < 6; i++) {
+            if (numbers.get(i) == bonusNumber)
                 return true;
         }
         return false;

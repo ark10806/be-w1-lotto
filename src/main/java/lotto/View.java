@@ -1,8 +1,6 @@
 package lotto;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class View {
@@ -49,12 +47,20 @@ public class View {
         return bonusNumber;
     }
 
-    public void printStat(ArrayList<Integer> winningCount, double yield) {
+    public void printStat(LinkedHashMap<Rank, Integer> winningCount, double yield) {
         System.out.println("당첨 통계");
         System.out.println("---------");
 
-        for (int i = 3; i <= 6; i++) {
-            System.out.println(i + "개 일치 (" + Rank.valueOf(i, false).getWinningMoney() + "원)- " + winningCount.get(i));
+        Set<Rank> set = winningCount.keySet();
+        Iterator<Rank> iter = set.iterator();
+        while (iter.hasNext()) {
+            Rank rank = ((Rank) iter.next());
+            int count = winningCount.get(rank);
+            if (rank == Rank.SECOND) {
+                System.out.println(rank.getCountOfMatch() + "개 일치, 보너스 볼 일치 (" + rank.getWinningMoney() + "원)- " + count);
+            } else {
+                System.out.println(rank.getCountOfMatch() + "개 일치 (" + rank.getWinningMoney() + "원)- " + count);
+            }
         }
 
         System.out.println("총 수익률은 " + yield + "%입니다.");
