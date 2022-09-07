@@ -13,18 +13,37 @@ public class Main {
     public static void main(String[] args) {
 
         Input input = new Input();
-        Service service = new Service();
         Output output = new Output();
 
         int inputCost = input.inputPrice();
         int lottoNum = inputCost/Cost;
-        output.printLottoPurchase(lottoNum);
 
-        ArrayList<ArrayList<Integer>> lottoNumbers = new ArrayList<>();
+        //수동으로 입력
+        int manualLottoNum = input.inputLottoSize();
 
-        for (int i=0; i<lottoNum; i++){
-            lottoNumbers.add(service.createLottoNumbers());
+        //서비스 생성
+        Service service = new Service(lottoNum, manualLottoNum);
+
+        ArrayList<ArrayList<Integer>> lottoManualNumbers = input.inputLottoManualNumbers(manualLottoNum);
+
+        output.printLottoPurchase(lottoNum, manualLottoNum);
+
+
+//        ArrayList<ArrayList<Integer>> lottoNumbers = new ArrayList<>();
+
+        for (int i=0; i<lottoNum - lottoManualNumbers.size(); i++){
+            ArrayList<Integer> numbers = service.createLottoNumbers();
+            service.addLottoNumbers(numbers);
         }
+
+        for (int i=0; i<lottoManualNumbers.size(); i++){
+            service.addLottoNumbers(lottoManualNumbers.get(i));
+        }
+
+
+        ArrayList<ArrayList<Integer>> lottoNumbers = service.getLottoManualNumbers();
+
+        output.printLottoNumbers(lottoNumbers);
 
         ArrayList<Integer> winningNumber = input.inputLottoNumbers();
 

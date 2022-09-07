@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 public class Output {
 
-
+    public void printLottoNumbers(ArrayList<ArrayList<Integer>> lottoNumbers) {
+        for (ArrayList<Integer> lottoNumber : lottoNumbers) {
+            System.out.println(lottoNumber);
+        }
+    }
 
     public void printLottoResult(int matchNumbers, int count){
         switch(matchNumbers) {
@@ -47,8 +51,8 @@ public class Output {
                 30000000 * count.get(7);
     }
 
-    public void printLottoPurchase(int lottoNum){
-        System.out.println( lottoNum + "개를 구매했습니다.");
+    public void printLottoPurchase(int lottoNum, int manualLottoNum){
+        System.out.println( "수동으로" + manualLottoNum + "장, 자동으로 " + (lottoNum - manualLottoNum) + "개를 구매했습니다.");
 
     }
 
