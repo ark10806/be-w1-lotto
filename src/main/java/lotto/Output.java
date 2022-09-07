@@ -43,7 +43,8 @@ public class Output {
         return  5000 * count.get(3) +
                 50000 * count.get(4) +
                 1500000 * count.get(5) +
-                2000000000 * count.get(6);
+                2000000000 * count.get(6) +
+                30000000 * count.get(7);
     }
 
     public void printLottoPurchase(int lottoNum){
