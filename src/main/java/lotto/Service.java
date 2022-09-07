@@ -24,11 +24,11 @@ public class Service {
 
 
     public int countCorrectNumber(ArrayList<Integer> lottoNumbers, ArrayList<Integer> myNumbers){
-        Collections.sort(lottoNumbers);
-        Collections.sort(myNumbers);
+        // Collections.sort(lottoNumbers);
+        // Collections.sort(myNumbers);
 
         int correct = 0;
-        for(int i = 0; i < 6; i++) {
+        for(int i = 0; i < lottoNumbers.size(); i++) {
             if (myNumbers.contains(lottoNumbers.get(i))) {
                 correct ++;
             }

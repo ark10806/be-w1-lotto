@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 public class Main {
     public static final int Cost = 1000;
+    public static final int bonusMagicNumber = 7;
 
     public static String getHello() {
         return "Hello";
@@ -27,18 +28,37 @@ public class Main {
 
         ArrayList<Integer> winningNumber = input.inputLottoNumbers();
 
-        ArrayList<Integer> count = new ArrayList<>(Arrays.asList(0,0,0,0,0,0,0));
-        for (ArrayList<Integer> lottoNumber:lottoNumbers){
+        ArrayList<Integer> count = new ArrayList<>(Arrays.asList(0,0,0,0,0,0,0,0));
+
+        int bonusNumber = input.inputBonusNumber();
+
+        for (ArrayList<Integer> lottoNumber : lottoNumbers){
             int matchNum = service.countCorrectNumber(winningNumber,lottoNumber);
-            count.set(matchNum,count.get(matchNum)+1);
+            if (checkBonusNumber(service, count, bonusNumber, lottoNumber, matchNum)) continue;
+            count.set(matchNum, count.get(matchNum) + 1);
         }
 
         output.printResultString();
 
-        for (int i=3;i<7;i++){
-            output.printLottoResult(i,count.get(i));
+        for (int i = 3; i <= 7; i++){
+            if(i == 6) output.printLottoResult(i + 1,count.get(i + 1));
+            else if(i == 7) output.printLottoResult(i - 1,count.get(i - 1));
+            else output.printLottoResult(i,count.get(i));
         }
         output.printProfitRate(inputCost,count);
 
+    }
+
+    private static boolean checkBonusNumber(Service service, ArrayList<Integer> count, int bonusNumber, ArrayList<Integer> lottoNumber, int matchNum) {
+        if(matchNum == 5) {
+            ArrayList<Integer> bonusNumbers = new ArrayList<>();
+            bonusNumbers.add(bonusNumber);
+
+            if(service.countCorrectNumber(bonusNumbers, lottoNumber) == 1) {
+                count.set(bonusMagicNumber, count.get(bonusMagicNumber) + 1);
+                return true;
+            }
+        }
+        return false;
     }
 }
