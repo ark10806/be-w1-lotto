@@ -27,7 +27,7 @@ public class Lotto {
         }
     }
 
-    public static LottoResult runWithBonus(Set<Ticket> tickets, Ticket winningTicket, int bonusNumber, int money) {
+    public static LottoResult runWithBonus(Set<Ticket> tickets, WinningTicket winningTicket, int money) {
         Map<Rank, Integer> resultMap = new HashMap<>();
 
         initMap(resultMap);
@@ -36,7 +36,7 @@ public class Lotto {
             var target = new HashSet<>(ticket.getNumbers());
             target.retainAll(winningTicket.getNumbers());
 
-            boolean bonus = ticket.getNumbers().contains(bonusNumber);
+            boolean bonus = ticket.getNumbers().contains(winningTicket.getBonusNumber());
             resultMap.put(Rank.getRankOfResult(target.size(), bonus), resultMap.get(Rank.getRankOfResult(target.size(), bonus)) + 1);
         }
 

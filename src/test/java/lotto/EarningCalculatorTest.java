@@ -13,20 +13,19 @@ class EarningCalculatorTest {
     void getEarningRate() {
         var earningCalculator = new EarningCalculator();
 
-        var actual = earningCalculator.getEarningRate(new LottoResult(getResultMap(), 3500));
+        var actual = earningCalculator.getEarningRate(new LottoResult(getResultMap(), 5000));
 
-        assertThat(actual).isEqualTo(57142900);
+        assertThat(actual).isEqualTo(0);
     }
 
-    private Map getResultMap() {
-        var resultMap = new HashMap<Integer, Integer>();
-        resultMap.put(0, 1);
-        resultMap.put(1, 0);
-        resultMap.put(2, 0);
-        resultMap.put(3, 1);
-        resultMap.put(4, 0);
-        resultMap.put(5, 0);
-        resultMap.put(6, 1);
+    private Map<Rank,Integer> getResultMap() {
+        var resultMap = new HashMap<Rank, Integer>();
+        resultMap.put(Rank.MISS, 0);
+        resultMap.put(Rank.FIFTH, 1);
+        resultMap.put(Rank.FOURTH, 0);
+        resultMap.put(Rank.THIRD, 0);
+        resultMap.put(Rank.SECOND, 0);
+        resultMap.put(Rank.FIRST, 0);
 
         return resultMap;
     }
