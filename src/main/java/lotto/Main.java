@@ -20,9 +20,12 @@ public class Main {
         // 지난 주 당첨 번호
         System.out.println("지난 주 당첨 번호를 입력해 주세요.");
         List<Integer> hits = getHits(br.readLine());
+        System.out.println("보너스 볼을 입력해주세요.");
+        int bonus = Integer.parseInt(br.readLine());
+        WinningLotto winningLotto = new WinningLotto(hits, bonus);
 
         // 당첨 통계
-        Map<Integer, Integer> awards = getAwards(lottos, hits);
+        Map<Award, Integer> awards = getAwards(lottos, winningLotto);
         printAwards(awards);
 
         // 수익률
@@ -46,38 +49,39 @@ public class Main {
         return hits;
     }
 
-    private static Map<Integer, Integer> getAwards(List<Lotto> lottos, List<Integer> hits) {
-        Map<Integer, Integer> awards = new HashMap<>();
+    private static Map<Award, Integer> getAwards(List<Lotto> lottos, WinningLotto winningLotto) {
+        Map<Award, Integer> awards = new EnumMap<>(Award.class);
 
         for (Lotto l : lottos) {
-            int hitRate = 0;
-            if ((hitRate = l.getHitRate(hits)) >= 3) {
-                awards.put(hitRate, awards.getOrDefault(hitRate, 0) + 1);
+            Award award = winningLotto.getAward(l);
+            if (award != null) {
+                awards.put(award, awards.getOrDefault(award, 0) + 1);
             }
         }
 
         return awards;
     }
 
-    private static void printAwards(Map<Integer, Integer> awards) {
+    private static void printAwards(Map<Award, Integer> awards) {
         System.out.println("당첨 통계");
         System.out.println("---------");
-        System.out.printf("3개 일치 (5000원)- %d개\n", awards.getOrDefault(3, 0));
-        System.out.printf("4개 일치 (50000원)- %d개\n", awards.getOrDefault(4, 0));
-        System.out.printf("5개 일치 (1500000원)- %d개\n", awards.getOrDefault(5, 0));
-        System.out.printf("6개 일치 (2000000000원)- %d개\n", awards.getOrDefault(6, 0));
+        System.out.printf("%d개 일치 (%d원)- %d개\n", Award.FIFTH.hit, Award.FIFTH.price, awards.getOrDefault(Award.FIFTH, 0));
+        System.out.printf("%d개 일치 (%d원)- %d개\n", Award.FOURTH.hit, Award.FOURTH.price, awards.getOrDefault(Award.FOURTH, 0));
+        System.out.printf("%d개 일치 (%d원)- %d개\n", Award.THIRD.hit, Award.THIRD.price, awards.getOrDefault(Award.THIRD, 0));
+        System.out.printf("%d개 일치, 보너스 볼 일치 (%d원)- %d개\n", Award.SECOND.hit, Award.SECOND.price, awards.getOrDefault(Award.SECOND, 0));
+        System.out.printf("%d개 일치 (%d원)- %d개\n", Award.FIRST.hit, Award.FIRST.price, awards.getOrDefault(Award.FIRST, 0));
     }
 
-    private static void printEarningPrice(Map<Integer, Integer> awards, int buyingPrice) {
+    private static void printEarningPrice(Map<Award, Integer> awards, int buyingPrice) {
         long earningPrice = getTotalAwards(awards);
         double earningRate = ((earningPrice / (double) buyingPrice) - 1) * 100;
         System.out.printf("총 수익률을 %.2f%%입니다.", earningRate);
     }
 
-    private static long getTotalAwards(Map<Integer, Integer> awards) {
+    private static long getTotalAwards(Map<Award, Integer> awards) {
         long total = 0;
-        for (Map.Entry<Integer, Integer> map : awards.entrySet()) {
-            total += (long) Award.getPrice(map.getKey()) * map.getValue();
+        for (Map.Entry<Award, Integer> entry : awards.entrySet()) {
+            total += (long) (entry.getKey().price) * entry.getValue();
         }
         return total;
     }
