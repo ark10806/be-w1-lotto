@@ -11,15 +11,15 @@ public class TicketAutomaticMaker {
         }
     }
 
-    public Set<Ticket> make(int ticketCount){
+    public Set<LottoTicket> make(int ticketCount){
 
-        Set<Ticket> tickets = new HashSet<>();
+        Set<LottoTicket> lottoTickets = new HashSet<>();
 
         for (int i = 0 ; i < ticketCount; i++){
-            tickets.add(new Ticket(getRandomNumbers()));
+            lottoTickets.add(new LottoTicket(getRandomNumbers()));
         }
 
-        return tickets;
+        return lottoTickets;
     }
 
     private Set<Integer> getRandomNumbers() {

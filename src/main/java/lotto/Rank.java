@@ -34,9 +34,14 @@ public enum Rank {
     public static Rank getRankOfResult(int matchCount, boolean bonus){
 
         for (Rank rank : Rank.values()){
-            if (rank.getMatchCount() == matchCount && rank.getBonus() == bonus)
+            if(matchCount == 5 && bonus) {
+                return Rank.SECOND;
+            }
+
+            if (rank.getMatchCount() == matchCount)
                 return rank;
         }
+
         return Rank.MISS;
     }
 
