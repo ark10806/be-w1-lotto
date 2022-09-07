@@ -6,14 +6,14 @@ import java.util.Map;
 import java.util.Set;
 
 public class Lotto {
-    public static LottoResult run(Set<Ticket> tickets, Ticket winningTicket, int money) {
+    public static LottoResult run(Set<LottoTicket> lottoTickets, LottoTicket winningLottoTicket, int money) {
         Map<Rank, Integer> resultMap = new HashMap<>();
 
         initMap(resultMap);
 
-        for (var ticket : tickets) {
+        for (var ticket : lottoTickets) {
             var target = new HashSet<>(ticket.getNumbers());
-            target.retainAll(winningTicket.getNumbers());
+            target.retainAll(winningLottoTicket.getNumbers());
 
             resultMap.put(Rank.getRankOfResult(target.size(), false), resultMap.get(Rank.getRankOfResult(target.size(), false)) + 1);
         }
@@ -27,12 +27,12 @@ public class Lotto {
         }
     }
 
-    public static LottoResult runWithBonus(Set<Ticket> tickets, WinningTicket winningTicket, int money) {
+    public static LottoResult runWithBonus(Set<LottoTicket> lottoTickets, WinningLottoTicket winningTicket, int money) {
         Map<Rank, Integer> resultMap = new HashMap<>();
 
         initMap(resultMap);
 
-        for (var ticket : tickets) {
+        for (var ticket : lottoTickets) {
             var target = new HashSet<>(ticket.getNumbers());
             target.retainAll(winningTicket.getNumbers());
 

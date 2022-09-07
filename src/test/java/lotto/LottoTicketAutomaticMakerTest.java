@@ -6,14 +6,14 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.*;
 
-class TicketAutomaticMakerTest {
+class LottoTicketAutomaticMakerTest {
     @Test
     public void makeTest(){
         TicketAutomaticMaker ticketAutomaticMaker = new TicketAutomaticMaker();
-        Set<Ticket> tickets = ticketAutomaticMaker.make(3);
+        Set<LottoTicket> lottoTickets = ticketAutomaticMaker.make(3);
 
-        for(Ticket ticket : tickets){
-            assertThat(ticket.getNumbers().size()).isEqualTo(6);
+        for(LottoTicket lottoTicket : lottoTickets){
+            assertThat(lottoTicket.getNumbers().size()).isEqualTo(6);
         }
     }
 }

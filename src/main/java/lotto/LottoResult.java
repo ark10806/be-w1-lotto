@@ -38,12 +38,6 @@ public class LottoResult {
                 return false;
         }
 
-//        for (int i = 0; i <= 6; i++) {
-//            if (statistics.get(i) != targetMap.get(i)) {
-//                return false;
-//            }
-//        }
-
         return true;
     }
 
