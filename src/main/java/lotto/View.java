@@ -38,16 +38,23 @@ public class View {
         int[] values = Arrays.stream(strings).mapToInt(Integer::parseInt).toArray();
         winningNumbers = (ArrayList<Integer>) Arrays.stream(values).boxed().collect(Collectors.toList());
 
-        System.out.println();
         return winningNumbers;
     }
 
-    public void printStat(ArrayList<Integer> winningCount, ArrayList<Integer> winnings, double yield) {
+    public int inputBonusNumber() {
+        System.out.println("보너스 볼을 입력해 주세요.");
+        int bonusNumber = Integer.parseInt(sc.nextLine());
+
+        System.out.println();
+        return bonusNumber;
+    }
+
+    public void printStat(ArrayList<Integer> winningCount, double yield) {
         System.out.println("당첨 통계");
         System.out.println("---------");
 
         for (int i = 3; i <= 6; i++) {
-            System.out.println(i + "개 일치 (" + winnings.get(i - 3) + "원)- " + winningCount.get(i));
+            System.out.println(i + "개 일치 (" + Rank.valueOf(i, false).getWinningMoney() + "원)- " + winningCount.get(i));
         }
 
         System.out.println("총 수익률은 " + yield + "%입니다.");

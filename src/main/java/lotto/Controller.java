@@ -1,16 +1,15 @@
 package lotto;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class Controller {
     private View view = new View();
     private int lottoNumber;
     private ArrayList<Lotto> lottos = new ArrayList<>();
     private ArrayList<Integer> winningNumbers;
-    private ArrayList<Integer> winningCount;
+    private int bonusNumber;
+    private LinkedHashMap<Rank, Integer> winningCount;
     private double yield;
-    ArrayList<Integer> winnings = new ArrayList<>(Arrays.asList(5000, 50000, 1500000, 2000000000));
 
     public void start() {
         lottoNumber = view.inputMoney() / 1000;
@@ -18,27 +17,38 @@ public class Controller {
         buy();
         view.printLottos(lottos);
         winningNumbers = view.inputWinningNumbers();
+        bonusNumber = view.inputBonusNumber();
         calculateWinningCount();
         calculateYield();
-        view.printStat(winningCount, winnings, yield);
+        view.printStat(winningCount, yield);
+    }
+
+    public void initWinningCount() {
+        winningCount = new LinkedHashMap<>();
+        winningCount.put(Rank.valueOf(3,false), 0);
+        winningCount.put(Rank.valueOf(4,false), 0);
+        winningCount.put(Rank.valueOf(5,false), 0);
+        winningCount.put(Rank.valueOf(5,true), 0);
+        winningCount.put(Rank.valueOf(6,false), 0);
     }
 
     public void calculateWinningCount() {
-        winningCount = new ArrayList<>();
-        for (int i = 0; i <= 6; i++) {
-            winningCount.add(0);
-        }
-
+        initWinningCount();
         for (int i = 0; i < lottos.size(); i++) {
             int index = lottos.get(i).match(winningNumbers);
-            winningCount.set(index, winningCount.get(index) + 1);
+            boolean matched = false;
+            if ( index == 4 && lottos.get(i).bonusMatch(bonusNumber) ) {
+                index++;
+                matched = true;
+            }
+            winningCount.put(Rank.valueOf(index, matched), winningCount.get(Rank.valueOf(index, matched))+1);
         }
     }
 
     public void calculateYield() {
         int totalWinnings = 0;
         for (int i = 3; i <= 6; i ++) {
-            totalWinnings += winningCount.get(i) * winnings.get(i-3);
+            totalWinnings += winningCount.get(i) * Rank.valueOf(i, false).getWinningMoney();
         }
         yield = ((totalWinnings-(lottoNumber*1000))/(lottoNumber*1000.0))*100;
     }
