@@ -12,15 +12,18 @@ public class LottoJava {
 
     private ArrayList<HashSet<Integer>> papers = new ArrayList<>();
 
-    public void insertCoin() {
+    public Integer insertCoin() {
         Scanner sc = new Scanner(System.in);
         System.out.println("구입금액을 입력해 주세요.");
         coin = sc.nextInt();
+        return coin;
     }
+
     public void lottoCount() {
         count = coin / 1000;
         System.out.println("로또의 개수는 :" + count);
     }
+
     private HashSet getPaper() {
         HashSet<Integer> paper = new HashSet<>();
         while (paper.size() < LOTTONUM) {
@@ -28,6 +31,7 @@ public class LottoJava {
         }
         return paper;
     }
+
     public ArrayList<HashSet<Integer>> getAllPapers() {
         papers.clear();
         for (int i = 0; i < count; i++) {
@@ -42,9 +46,5 @@ public class LottoJava {
         return papers;
     }
 
-    public ArrayList<HashSet<Integer>> run() {
-        insertCoin();
-        lottoCount();
-        return getAllPapers();
-    }
+
 }
