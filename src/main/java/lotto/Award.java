@@ -18,7 +18,7 @@ public class Award {
             if (winnerNumber.size() != 6) {
                 throw new IllegalArgumentException("당첨번호를 중복되지 않는 6개 값으로 설정해주세요");
             }
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.out.println(e);
             setWinnerNumbers();
         }
@@ -31,9 +31,9 @@ public class Award {
     }
 
     public void compute(ArrayList<HashSet<Integer>> candidates) {
-        for (int i=0; i<candidates.size(); i++) {
+        for (int i = 0; i < candidates.size(); i++) {
             Integer matchNum = getMatchNum(candidates.get(i));
-            panel.set(matchNum, panel.get(matchNum)+1);
+            panel.set(matchNum, panel.get(matchNum) + 1);
         }
     }
 
@@ -44,5 +44,12 @@ public class Award {
         System.out.printf("4개 일치 (50000원)- %d개\n", panel.get(4));
         System.out.printf("5개 일치 (1500000원)- %d개\n", panel.get(5));
         System.out.printf("6개 일치 (2000000000원)- %d개\n", panel.get(6));
+    }
+
+    public void showYield(int coin) {
+        System.out.println(panel);
+        float income = panel.get(3) * 5000 + panel.get(4) * 50000 + panel.get(5) * 1500000 + panel.get(6) * 2000000000;
+        float yeild = ((income - (float)coin) / (float)coin) * 100;
+        System.out.printf("총 수익률은 %f입니다.", yeild);
     }
 }
