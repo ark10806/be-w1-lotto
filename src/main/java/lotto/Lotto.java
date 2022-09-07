@@ -17,6 +17,10 @@ public class Lotto {
         Collections.sort(numbers);
     }
 
+    public Lotto(ArrayList<Integer> numbers) {
+        this.numbers = new ArrayList<>(numbers);
+    }
+
     public ArrayList<Integer> getNumbers() {
         return numbers;
     }

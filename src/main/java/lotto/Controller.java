@@ -1,10 +1,12 @@
 package lotto;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Controller {
     private View view = new View();
-    private int lottoNumber;
+    private int lottoCount;
+    private int manualLottoCount;
     private ArrayList<Lotto> lottos = new ArrayList<>();
     private ArrayList<Integer> winningNumbers;
     private int bonusNumber;
@@ -12,15 +14,21 @@ public class Controller {
     private double yield;
 
     public void start() {
-        lottoNumber = view.inputMoney() / 1000;
-        view.printLottoNumber(lottoNumber);
+        lottoCount = view.inputMoney() / 1000;
+        manualLottoCount = view.inputManualLottoCount(lottoCount);
+        buyManualLottos(view.inputManualLottoNumbers(manualLottoCount));
+        view.printLottoCount(lottoCount, manualLottoCount);
         buy();
-        view.printLottos(lottos);
+        view.printLottoNumbers(lottos);
         winningNumbers = view.inputWinningNumbers();
-        bonusNumber = view.inputBonusNumber();
+        bonusNumber = view.inputBonusNumber(winningNumbers);
         calculateWinningCount();
         calculateYield();
         view.printStat(winningCount, yield);
+    }
+
+    public void buyManualLottos(ArrayList<ArrayList<Integer>> manualLottoNumbers) {
+        lottos.addAll(manualLottoNumbers.stream().map(Lotto::new).collect(Collectors.toList()));
     }
 
     public void initWinningCount() {
@@ -37,8 +45,7 @@ public class Controller {
         for (int i = 0; i < lottos.size(); i++) {
             int index = lottos.get(i).match(winningNumbers);
             boolean matched = false;
-            if (index == 4 && lottos.get(i).bonusMatch(bonusNumber)) {
-                index++;
+            if (index == 5 && lottos.get(i).bonusMatch(bonusNumber)) {
                 matched = true;
             }
             if (index >= 3) {
@@ -58,11 +65,11 @@ public class Controller {
             totalWinnings += rank.getWinningMoney() * count;
         }
 
-        yield = ((totalWinnings - (lottoNumber * 1000)) / (lottoNumber * 1000.0)) * 100;
+        yield = ((totalWinnings - (lottoCount * 1000)) / (lottoCount * 1000.0)) * 100;
     }
 
     public void buy() {
-        for (int i = 0; i < lottoNumber; i++) {
+        for (int i = 0; i < lottoCount - manualLottoCount; i++) {
             lottos.add(new Lotto());
         }
     }
