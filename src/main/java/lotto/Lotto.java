@@ -44,4 +44,12 @@ public class Lotto {
 
         return matched;
     }
+
+    public boolean bonusMatch(int bonusNumber) {
+        for ( int i = 0 ; i < 6 ; i++ ) {
+            if ( numbers.get(i) == bonusNumber )
+                return true;
+        }
+        return false;
+    }
 }
