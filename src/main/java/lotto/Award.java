@@ -3,7 +3,6 @@ package lotto;
 import java.util.*;
 
 public class Award extends LottoRule {
-    Scanner sc = new Scanner(System.in);
     private HashSet<Integer> winnerNumber = new HashSet<>();
     private int bonusNumber;
     private HashSet<Integer> intersection = new HashSet<>();
@@ -20,23 +19,12 @@ public class Award extends LottoRule {
     }
 
     private void setWinnerNumbers() {
-        int num;
-        System.out.println("지난 주 당첨 번호를 입력해 주세요.");
-        String lastNumber = sc.nextLine();
-        for (String s : lastNumber.split(", ")) {
-            num = Integer.parseInt(s);
-            if (num < 1 || num > LOTTOMAX) {
-                throw new IllegalArgumentException(num + "은 적절한 값이 아닙니다. (1~45)");
-            }
-            winnerNumber.add(num);
-        }
-        if (winnerNumber.size() != LOTTONUM) {
-            throw new IllegalArgumentException("당첨번호를 중복되지 않는 6개 값으로 설정해주세요");
-        }
+        System.out.println("\n지난 주 당첨 번호를 입력해 주세요.");
+        winnerNumber = lottoNumParser();
     }
 
     private void setBonusNumber() {
-        System.out.println("보너스 볼을 입력해 주세요.");
+        System.out.println("\n보너스 볼을 입력해 주세요.");
         bonusNumber = sc.nextInt();
     }
 
@@ -44,7 +32,6 @@ public class Award extends LottoRule {
         intersection = new HashSet<>(winnerNumber);
         intersection.retainAll(candidate);
 
-        // 5개 + 보너스볼이면 -1을 반환
         if (intersection.size() == 5 && candidate.contains(bonusNumber))
             return LOTTONUM + 1;
         return intersection.size();

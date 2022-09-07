@@ -1,27 +1,18 @@
 package lotto;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-
 public class Main {
 
     public static void main(String[] args) {
-        int coin;
-        ArrayList<HashSet<Integer>> papers;
         SlotMachine slotMachine = new SlotMachine();
         Award award = new Award();
 
-        coin = slotMachine.insertCoin();
-        slotMachine.checkNotAuto();
-        slotMachine.lottoCount();
-        slotMachine.notAutoWrite();
-        notAutoPapers = slotMachine.getNotAutoPapers();
-        papers = slotMachine.getAllPapers();
+        slotMachine.purchase();
+        slotMachine.publish();
+        slotMachine.showPapers();
 
         award.init();
-        award.compute(papers);
+        award.compute(slotMachine.getPapers());
         award.showResult();
-        award.showYield(coin);
+        award.showYield(slotMachine.getCoin());
     }
 
 
