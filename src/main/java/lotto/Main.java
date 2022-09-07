@@ -38,7 +38,12 @@ public class Main {
 
         Ticket winningTicket = new Ticket(winningNumbers);
 
-        LottoResult result = Lotto.run(tickets, winningTicket, money);
+        System.out.println("지난 주 당첨 번호를 입력해 주세요.");
+        int bonusNumber = scan.nextInt();
+
+//        LottoResult result = Lotto.run(tickets, winningTicket, ticketCount  * UNIT_COST);
+        LottoResult result = Lotto.runWithBonus(tickets, winningTicket, bonusNumber, ticketCount  * UNIT_COST);
+
         printStatistics(result);
     }
 

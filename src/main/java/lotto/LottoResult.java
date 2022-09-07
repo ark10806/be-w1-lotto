@@ -3,10 +3,10 @@ package lotto;
 import java.util.Map;
 
 public class LottoResult {
-    private final Map<Integer, Integer> statistics;
+    private final Map<Rank, Integer> statistics;
     private final int principal;
 
-    public LottoResult(Map<Integer, Integer> statistics, int principal) {
+    public LottoResult(Map<Rank, Integer> statistics, int principal) {
         this.statistics = statistics;
         this.principal = principal;
     }
@@ -15,7 +15,7 @@ public class LottoResult {
         return principal;
     }
 
-    public Map<Integer, Integer> getStatistics() {
+    public Map<Rank, Integer> getStatistics() {
         return statistics;
     }
 
@@ -31,12 +31,18 @@ public class LottoResult {
         return checkMap(lottoResult.statistics);
     }
 
-    private boolean checkMap(Map<Integer, Integer> targetMap) {
-        for (int i = 0; i <= 6; i++) {
-            if (statistics.get(i) != targetMap.get(i)) {
+    private boolean checkMap(Map<Rank, Integer> targetMap) {
+
+        for (Rank rank : Rank.values()){
+            if (statistics.get(rank) != targetMap.get(rank))
                 return false;
-            }
         }
+
+//        for (int i = 0; i <= 6; i++) {
+//            if (statistics.get(i) != targetMap.get(i)) {
+//                return false;
+//            }
+//        }
 
         return true;
     }
